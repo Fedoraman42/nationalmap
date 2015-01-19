@@ -804,6 +804,7 @@ AusGlobeViewer.prototype.selectViewer = function(bCesium) {
 
             this.viewer.destroy();
             this.viewer = undefined;
+            this.scene = undefined;
         }
         else {
             bnds = rectangleToLatLngBounds(this.application.initialBoundingBox);
