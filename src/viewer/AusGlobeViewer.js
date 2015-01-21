@@ -895,6 +895,7 @@ AusGlobeViewer.prototype.selectViewer = function(bCesium) {
             that.map.attributionControl.removeFrom(that.map);
             html2canvas( document.getElementById('cesiumContainer'), {
 	            useCORS: true,
+                logging: true,
                 onrendered: function(canvas) {
                     var dataUrl = canvas.toDataURL("image/jpeg");
                     that.captureCanvasCallback(dataUrl);

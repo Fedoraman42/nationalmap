@@ -224,34 +224,6 @@ function recolorBillboard(img, color) {
 //    return context.getImageData(0, 0, canvas.width, canvas.height);
 }
 
-L.Icon.Canvas = L.Icon.extend({
-    options: {
-        iconSize: new L.Point(20, 20), // Have to be supplied
-        /*
-        iconAnchor: (Point)
-        popupAnchor: (Point)
-        */
-        className: 'leaflet-canvas-icon'
-    },
-
-    createIcon: function () {
-        var e = document.createElement('canvas');
-        this._setIconStyles(e, 'icon');
-        var s = this.options.iconSize;
-        e.width = s.x;
-        e.height = s.y;
-        this.draw(e.getContext('2d'), s.x, s.y);
-        return e;
-    },
-
-    createShadow: function () {
-        return null;
-    },
-
-    draw: function(canvas, width, height) {
-    }
-});
-
 //Single pixel black dot
 var tmpImage = "data:image/gif;base64,R0lGODlhAQABAPAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
 
@@ -295,31 +267,14 @@ LeafletGeomVisualizer.prototype._updateBillboard = function(entity, time) {
         iconOptions.iconSize = [width, height];
     }
 
-var circle = new L.Icon.Canvas({iconSize: new L.Point(30, 30)});
-circle.draw = function(ctx, w, h) {
-    ctx.translate(w/2, h/2);
-    ctx.beginPath();
-    ctx.fillStyle = "#F00";
-    ctx.arc(0, 0, w/2-1, 0, Math.PI*2, true); 
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#FFF';
-    ctx.moveTo(-w/5, -h/5);
-    ctx.lineTo(w/5, h/5);
-    ctx.moveTo(-w/5, h/5);
-    ctx.lineTo(w/5, -h/5);
-    ctx.stroke();
-    ctx.closePath();
-}
-
     var redrawIcon = false;
     if (!defined(geomLayer)) {
-        var markerOptions = {icon: circle}; // L.Icon.Canvas({iconUrl: tmpImage})};
+        var markerOptions = {icon: L.icon({iconUrl: tmpImage})};
         marker = L.marker(latlng, markerOptions);
         marker.bindPopup(description, {maxHeight: popupHeight});
         featureGroup.addLayer(marker);
         entity._geomBillboard = marker;
-        redrawIcon = false;
+        redrawIcon = true;
     } else {
         marker = geomLayer;
         if (!marker._latlng.equals(latlng)) {
@@ -327,7 +282,7 @@ circle.draw = function(ctx, w, h) {
         }
         for (var prop in iconOptions) {
             if (iconOptions[prop] !== marker.options.icon.options[prop]) {
-                redrawIcon = false;
+                redrawIcon = true;
                 break;
             }
         }
