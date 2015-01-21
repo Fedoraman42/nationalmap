@@ -2878,17 +2878,8 @@ Renderer.prototype.renderImage = function(container, bounds, borderData, imageCo
         paddingBottom = container.cssInt('paddingBottom'),
         borders = borderData.borders;
 
-    if (imageContainer.image.currentSrc.indexOf('data:image') === -1) {
-        console.log('dropped', imageContainer.image.currentSrc);
-    } else {
-        bounds.bottom = 380; bounds.height = 256;
-        bounds.left = 226; bounds.right = 482;
-        bounds.top = 124; bounds.width = 256;
-    }
-    
     var width = bounds.width - (borders[1].width + borders[3].width + paddingLeft + paddingRight);
     var height = bounds.height - (borders[0].width + borders[2].width + paddingTop + paddingBottom);
-    
     this.drawImage(
         imageContainer,
         0,
