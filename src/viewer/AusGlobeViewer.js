@@ -893,14 +893,13 @@ AusGlobeViewer.prototype.selectViewer = function(bCesium) {
                 that.startup = false;
             }
             that.map.attributionControl.removeFrom(that.map);
-            html2canvas( document.getElementById('cesiumContainer'), {
+            when(html2canvas( document.getElementById('cesiumContainer'), {
 	            useCORS: true,
-                logging: true,
-                onrendered: function(canvas) {
+                logging: true
+            }), function(canvas) {
                     var dataUrl = canvas.toDataURL("image/jpeg");
                     that.captureCanvasCallback(dataUrl);
                     that.map.attributionControl.addTo(that.map);
-                }
             });
         };
 
